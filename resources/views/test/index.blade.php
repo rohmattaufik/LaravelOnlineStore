@@ -1,5 +1,10 @@
 ALl Products
 <br>
+
+<a href="/product/cart">
+Shopping cart = {{ Session::has('cart') ? Session::get('cart')->totalQty : '0' }}
+</a>
+
 <br>
 
 
@@ -12,5 +17,6 @@ ALl Products
 
     <input type="submit" name="name" value="delete">
   </form>
+  <a href="/product/cart/{{$product->id}}">Beli</a>
 <hr>
 @endforeach

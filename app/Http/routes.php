@@ -15,8 +15,12 @@ Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
 
+Route::get('/product/cart/{id}', 'CartController@getAddToCart');
+
+Route::get('/product/cart', 'CartController@getCart');
+
 Route::group(['middleware' => ['web']], function(){
-	
+
 });
 
 Route::resource('products', 'ProductsController');
