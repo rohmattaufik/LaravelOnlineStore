@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 class ProductsController extends Controller {
 
 	/**
-	 * Display a listing of the resource.
+	 * Show list of products
 	 *
-	 * @return Response
+	 * @return list of products
 	 */
 	public function index()
 	{
@@ -19,10 +19,29 @@ class ProductsController extends Controller {
 		return view('test.index')->with('products',$products);
 	}
 
+
 	/**
-	 * Show the form for creating a new resource.
+	 * Display the specified product.
 	 *
-	 * @return Response
+	 * @param  int  $slug
+	 * @return product
+	 */
+	public function show($slug)
+	{
+		$product = product::where('slug',$slug)->first();
+		if (!$product) {
+			abort(404);
+		}
+		return view('test.show')->with('product',$product);
+	}
+
+
+//-----------------------------------------------------------------
+
+	/**
+	 * Show the form for creating a new product.
+	 *
+	 * @return form
 	 */
 	public function create()
 	{
@@ -30,9 +49,9 @@ class ProductsController extends Controller {
 	}
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Store a newly created product in storage.
 	 *
-	 * @return Response
+	 * @return redirect -> list of product
 	 */
 	public function store(Request $request)
 	{
@@ -58,26 +77,12 @@ class ProductsController extends Controller {
 		return redirect('products');
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($slug)
-	{
-		$product = product::where('slug',$slug)->first();
-		if (!$product) {
-			abort(404);
-		}
-		return view('test.show')->with('product',$product);
-	}
 
 	/**
-	 * Show the form for editing the specified resource.
+	 * Show the form for editing the specified product.
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @param  int  $id of product
+	 * @return form edit
 	 */
 	public function edit($id)
 	{
@@ -89,10 +94,10 @@ class ProductsController extends Controller {
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * Update the specified product in storage.
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return redirect-> list of product
 	 */
 	public function update(Request $request, $id)
 	{
@@ -119,7 +124,7 @@ class ProductsController extends Controller {
 	}
 
 	/**
-	 * Remove the specified resource from storage.
+	 * Remove the specified product from storage.
 	 *
 	 * @param  int  $id
 	 * @return Response
