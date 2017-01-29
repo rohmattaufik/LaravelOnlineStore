@@ -35,5 +35,9 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "semantic-ui-css": "^2.2.4",
+    "semantic-ui-react": "^0.64.4"
   }
 }
