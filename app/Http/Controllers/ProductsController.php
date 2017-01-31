@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller {
 
+
+//------------------------Customer area----------------------------------------
+
 	/**
-	 * Show list of products
-	 *
+	 * function index()
+	 * -> Show list of products (all product from database)
 	 * @return list of products
 	 */
 	public function index()
@@ -21,14 +24,18 @@ class ProductsController extends Controller {
 
 
 	/**
-	 * Display the specified product.
-	 *
+	 * function show($slug)
+	 * -> Display the specified produc
+	 *  	-> get product by it slug
+	 *		-> product's slug is product's title but 'space' replace by '-'
 	 * @param  int  $slug
 	 * @return product
 	 */
 	public function show($slug)
 	{
+		// find the product by it's slug
 		$product = product::where('slug',$slug)->first();
+		// abort if product not found
 		if (!$product) {
 			abort(404);
 		}
@@ -36,11 +43,11 @@ class ProductsController extends Controller {
 	}
 
 
-//-----------------------------------------------------------------
+//-----------------------Admin area------------------------------------------
 
 	/**
-	 * Show the form for creating a new product.
-	 *
+	 * function create()
+	 * -> Show the form for creating a new product.
 	 * @return form
 	 */
 	public function create()
@@ -49,12 +56,14 @@ class ProductsController extends Controller {
 	}
 
 	/**
-	 * Store a newly created product in storage.
-	 *
+	 * function store
+	 * -> Store a newly created product in storage.
+	 * -> get data from form, validate, store to database
 	 * @return redirect -> list of product
 	 */
 	public function store(Request $request)
 	{
+		// validate the form
 		$this -> validate($request, [
 			'title' => 'required',
 			'kategory' => 'required',
@@ -63,7 +72,7 @@ class ProductsController extends Controller {
 			'price' => 'required',
 			'image' => 'required',
 		]);
-
+		//store to database
 		$product = new product;
 		$product->title = $request->title;
 		$product->kategory = $request->kategory;
@@ -79,8 +88,8 @@ class ProductsController extends Controller {
 
 
 	/**
-	 * Show the form for editing the specified product.
-	 *
+	 * function edit
+	 * -> Show the form for editing the specified product.
 	 * @param  int  $id of product
 	 * @return form edit
 	 */
@@ -94,13 +103,15 @@ class ProductsController extends Controller {
 	}
 
 	/**
+	 * function update()
 	 * Update the specified product in storage.
-	 *
-	 * @param  int  $id
+	 * -> get product info, validate, update
+	 * @param  int  $id product
 	 * @return redirect-> list of product
 	 */
 	public function update(Request $request, $id)
 	{
+		// validate the form
 		$this -> validate($request, [
 			'title' => 'required',
 			'kategory' => 'required',
@@ -109,7 +120,7 @@ class ProductsController extends Controller {
 			'price' => 'required',
 			'image' => 'required',
 		]);
-
+		//find the product and update
 		$product = product::find($id);
 		$product->title = $request->title;
 		$product->kategory = $request->kategory;
@@ -123,17 +134,18 @@ class ProductsController extends Controller {
 		return redirect('products');
 	}
 
+
 	/**
 	 * Remove the specified product from storage.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+/**	public function destroy($id)
 	{
 		$product = product::find($id);
 		$product->delete();
 		return redirect('products');
 	}
-
+	*/
 }

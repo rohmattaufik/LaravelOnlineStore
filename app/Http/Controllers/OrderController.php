@@ -12,37 +12,47 @@ use Illuminate\Http\Request;
 class OrderController extends Controller {
 
 	/**
-	 * Display a listing of the resource.
-	 *
+	 * function index
+	 * -> Display list of order made by active customer
+	 *   -> get user id, find all order
 	 * @return Response
 	 */
 	public function index($idUser)
 	{
+		// find user id
+		/**
+			* code
+			* (*not complete)
+		*/
+
+		// find all customer order
 		$orders = User::find($idUser)->orders;
+		// abort if not found
 		if (!$orders) {
 			abort(404);
 		}
-		// $items = null;
-		// foreach ($orders as $order) {
-		//     $product = product::find($order->id);
-		// 		$storedItem = ['qty' => $order->quantity, 'item' => $product];
-		// 		$items[$order->id] = $storedItem;
-		// }
+
 		return view('test.order')->with('orders',$orders);
 	}
 
 	/**
-	 * Display the specified resource.
-	 *
+	 * function show(id)
+	 * -> Display the specified order.
+	 * 		-> order (order id( order number ), user, time, ispayd )
+	 *		-> order hasMany item
+	 *		-> item = detail of product (product's name, price, quantity)
 	 * @param  int  $id
 	 * @return Response
 	 */
 	public function show($id)
 	{
+		// find order
 		$order = Order::find($id);
+		//validate order
 		if (!$order) {
 			abort(404);
 		}
+		// find the all item of the order
 		$items = Order::find($id)->items;
 		return view('test.viewOrder')->with(['order'=>$order,'items'=>$items]);
 	}

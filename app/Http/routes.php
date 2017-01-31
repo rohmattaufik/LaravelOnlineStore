@@ -7,6 +7,8 @@
 |
 | 	/ --> show list products
 | 	/product/{slug} --> show specified products
+| 	/order --> show list orers by user active
+| 	/order/order_number/{id} --> show specified order
 | It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the controller to call when that URI is requested.
 |
